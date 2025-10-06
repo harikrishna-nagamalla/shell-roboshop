@@ -52,7 +52,7 @@ else
     echo -e "User already exists... $Y SKIPPING $N"
 fi
 ### Creating App Directory ###
-mkdir /app
+mkdir -p /app
 Validate $? "Creating app directory"
 
 ### Downloading Catalogue Application ###
