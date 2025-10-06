@@ -9,6 +9,7 @@ N="\e[0m"
 
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
+SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.nagamalla.fun
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" 
 
@@ -36,7 +37,7 @@ dnf module disable nodejs -y &>>$LOG_FILE
 Validate $? "Disabling NodeJS"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
-Validate $? "Enabling NodeJS"
+Validate $? "Enabling NodeJS 20 "
 
 dnf install nodejs -y &>>$LOG_FILE
 Validate $? "Installing NodeJS"
@@ -63,7 +64,7 @@ Validate $? "Unzipping Catalogue Application"
 npm install &>>$LOG_FILE
 Validate $? "Installing dependencies"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 Validatie $? "Copy systemctl service"
 
 systemctl enable catalogue &>>$LOG_FILE
