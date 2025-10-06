@@ -62,13 +62,16 @@ Validate $? "Downloading Catalogue Application"
 ### Unzipping Catalogue Application ###
 cd /app
 Validate $? "Changing to app directory"
+
+rm -rf /app/*
+Valoidate $? "Removing existing Code"
+
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 Validate $? "Unzipping Catalogue Application"
 
 ### Installing Dependencies ###
 npm install &>>$LOG_FILE
 Validate $? "Installing dependencies"
-
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 Validatie $? "Copy systemctl service"
 
