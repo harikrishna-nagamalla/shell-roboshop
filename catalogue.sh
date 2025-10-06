@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOGS_FOLDER="/var/log/shell-script"
+LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.nagamalla.fun
@@ -42,10 +42,15 @@ Validate $? "Enabling NodeJS 20 "
 dnf install nodejs -y &>>$LOG_FILE
 Validate $? "Installing NodeJS"
 
-### Creating System User ###
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-Validate $? "Creating system user"
+### Creating System User  ###
 
+id=roboshop
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    Validate $? "Creating system user"
+else
+    echo -e "User already exists... $Y SKIPPING $N"
+fi
 ### Creating App Directory ###
 mkdir /app
 Validate $? "Creating app directory"
@@ -73,7 +78,7 @@ Validate $? "Enable systemctl service"
 systemctl daemon-reload
 Validate $? "Reload systemctl service"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 Validate $? "Copy mongo repo"
 
 systemctl start catalogue
