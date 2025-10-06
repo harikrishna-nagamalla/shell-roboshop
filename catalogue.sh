@@ -64,7 +64,7 @@ cd /app
 Validate $? "Changing to app directory"
 
 rm -rf /app/*
-Valoidate $? "Removing existing Code"
+Validate $? "Removing existing Code"
 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 Validate $? "Unzipping Catalogue Application"
@@ -73,7 +73,7 @@ Validate $? "Unzipping Catalogue Application"
 npm install &>>$LOG_FILE
 Validate $? "Installing dependencies"
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-Validatie $? "Copy systemctl service"
+Validate $? "Copy systemctl service"
 
 systemctl enable catalogue &>>$LOG_FILE
 Validate $? "Enable systemctl service"
